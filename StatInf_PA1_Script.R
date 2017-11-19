@@ -13,9 +13,11 @@ for (i in 1:simulations) {
 }
 hist(exp_means)
 
+# mean
 mean_sample <- mean(exp_means)
 mean_theory <- 1/lam
 
+# variance
 var_sample <- var(exp_means)
 var_theory <- 1/(lam^2 * n)
-#y <- dnorm(x, 1, 0)
+
