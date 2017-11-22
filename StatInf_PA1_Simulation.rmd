@@ -70,7 +70,8 @@ We illustrate the conclusion of CLT visually that the observed exponential sampl
 # Sampled means vs theoretical normal distribution visualized
 x_points <- seq(min(exp_means), max(exp_means), length=100)
 y_points <- dnorm(x_points, mean=1/lam, sd=(1/lam/sqrt(n)))
-hist(exp_means, breaks = n,prob = TRUE,col = "gray87",xlab = "Means",main = "Means Density", ylab = "Density")
+hist(exp_means, breaks = n, prob = TRUE, col = "gray87"
+     , xlab = "Means", main = "Means Density", ylab = "Density")
 lines(x_points, y_points, pch=24, col="black", lty=5)
 ```
 
