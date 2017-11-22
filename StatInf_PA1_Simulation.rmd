@@ -1,7 +1,7 @@
 ---
 title: 'StatInf Project 1: Simulation'
 author: "Christopher Jones"
-date: "November 19, 2017"
+date: "November 21, 2017"
 output: pdf_document
 ---
 
@@ -11,30 +11,71 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-In 2-3 sentences I explain what is going to be reported on.
+In this report we compare the exponential distribution with the Central Limit Theorem (CLT) via simulation. We compare sample vs. theoretical mean, sample vs.theoretical variance, and overall goodness of fit. The exponential distribution models interarrival times for a Poisson process, with pdf given by $f(x) = \lambda e^{-\lambda x}$. Integration by parts once/twice gives the mean and variance as $\mu = 1/\lambda$ and $\sigma^2 = 1/\lambda^2$.
 
-```{r cars}
-summary(cars)
-```
 
 ## Simulations
 
-Include English explanations of the simulations you ran, with the accompanying R code. Your explanations should make clear what the R code accomplishes.
+This is a run of 1000 simulations of taking the mean from 40 samples of the exponential distribution.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+```{r simulation}
+# assign simulation parameters
+set.seed(42)
+lam = .5
+n <- 40
+simulations <- 1000
+
+# run
+exp_means <- NULL
+for (i in 1:simulations) {
+  exp_means <- c(exp_means, mean(rexp(n, lam)))
+}
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Sample vs. Theoretical Means
 
-## Sample Mean versus Theoretical Mean
+Below is a histogram of the simulation means, along their overall mean. For our parameter $\lambda = .5$, we have the theoretical mean $\mu = 1/\lambda = 2$.
 
-Include figures with titles. In the figures, highlight the means you are comparing. Include text that explains the figures and what is shown on them, and provides appropriate numbers.
+```{r sample_means}
+# Plot the results of the experiment
+hist(exp_means
+     , col="gray87"
+     , main="Sample vs. Actual Mean"
+     , xlim = c(0, 4)
+     , breaks = 40
+     , xlab = "Simulation Means")
+abline(v = mean(exp_means), lwd = "1", col = "red")
+```
 
-## Sample Variance versus Theoretical Variance
+The observed sample mean `r mean(exp_means)` agrees very well with the theoretical value of $2$.
 
-Include figures (output from R) with titles. Highlight the variances you are comparing. Include text that explains your understanding of the differences of the variances.
+## Sample vs Theoretical Variance
 
-## Distribution
+The sample variance of the exponential distribution is $\frac{1}{n\lambda^2} = \frac{1}{40 \times .5^2} = .1$
 
-Via figures and text, explain how one can tell the distribution is approximately normal.
+The observed variance is:
+
+```{r variances}
+var(exp_means)
+```
+
+So again we have very good agreement between the theoretical and observed values.
+
+## Distribution Comparison
+
+We illustrate the conclusion of CLT visually that the observed exponential sampled means are close to normal via 2 visualizations:
+
+```{r distributions_plot, fig.height = 4}
+# Sampled means vs theoretical normal distribution visualized
+x_points <- seq(min(exp_means), max(exp_means), length=100)
+y_points <- dnorm(x_points, mean=1/lam, sd=(1/lam/sqrt(n)))
+hist(exp_means, breaks = n,prob = TRUE,col = "gray87",xlab = "Means",main = "Means Density", ylab = "Density")
+lines(x_points, y_points, pch=24, col="black", lty=5)
+```
+
+
+```{r distributions_qq, fig.height = 4}
+# distribution quantiles compared - sampled exponential means vs normal
+qqnorm(exp_means); qqline(exp_means, col = 3)
+```
