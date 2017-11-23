@@ -5,43 +5,63 @@ date: "November 21, 2017"
 output: pdf_document
 ---
 
+In this report we examine ToothGrowth data, and draw some conclusions about it.
+
 ```{r setup, include=FALSE, tidy=TRUE, tidy.opts=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 read_chunk('StatInf1_PA1_ToothGrowth_Script.R')
 ```
 
-## Data Loading & Basic Exploratory Analysis
+## Data Loading 
 
-Load & simple analysis here.
+We load and look at the general shape of the data here:
 
 ```{r load_external_code}
 <<load>>
 ```
 
-## Basic Summary of ToothGrowth Data
+## Basic Summary & Data Analysis Of ToothGrowth Data
 
-Short summary of the data
+Basic summary statistics for the ToothGrowth dataset: 
 
 ```{r summary}
-<<summary_ex_anal>>
+<<summary>>
 ```
 
-## Tooth Growth Comparison By Supp And Dose
+And a visualization of how each supplement performs with dose/length:
 
-Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+```{r fdgdfcg}
+<<ex_anal>>
+```
 
-```{r comparison}
-<<comparison>>
+## Tooth Growth Comparison By Supplement And Dose
+
+We first use the t-test to compare the impact of supplement type on tooth growth:
+
+```{r comparison_supp}
+<<comparison1>>
+```
+
+Next we examine the impact of dosage on tooth growth
+
+```{r comparison_dose}
+<<comparison2>>
 ```
 
 
 ## Conclusions
 
-State conclusions, assumptions.
+Conclusions:
 
-```{r conclusion}
-<<chunk_4>>
-```
+1. From the supplement test, we reject the hypothesis that the mean tooth growth differs according to the supplement. Supplement type by itself does not affect tooth length.
+2. From the dosage tests we reject the hypothesis that mean tooth growth is by chance, and conclude that tooth length is affected (positively) by dosage level.
+
+
+Assumptions:
+
+1. The guinea pig populations are random and independent.
+2. Sampled guinea pigs are representive of guinea pigs generally.
+3. The variances between the compared populations are different.
 
 

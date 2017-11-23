@@ -1,27 +1,36 @@
 # ToothGrowth data analysis
-# first we practice code externalization
+# We alsopractice code externalization
 
 ## @knitr load
-# chunk 1 code
+# Data load code
 library(datasets)
 data(ToothGrowth)
 
 str(ToothGrowth)
 head(ToothGrowth, 5)
+
+
+## @knitr summary
+# Summary code
 summary(ToothGrowth)
 
 
-## @knitr summary_ex_anal
-# chunk 2 code
-2+2
-x <- 2+1
+## @knitr ex_anal
+# exploratory data analysis code
+coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
+       xlab = c("ToothGrowth data: length vs dose by supplement", "Supplement (mg/d)")
+       , ylab = expression(paste("Tooth Length ( ", mu, "m)", sep="")))
 
 
-## @knitr comparison
-# chunk 3 code
-y <- x + 4
+## @knitr comparison1
+# Compare supplements
+t.test(len ~ supp, data = ToothGrowth)
 
 
-## @knitr conclusions
-# chunk 4 code
-x + y
+## @knitr comparison2
+# 2 vs .5
+t.test(ToothGrowth$len[ToothGrowth$dose == 2],  ToothGrowth$len[ToothGrowth$dose == 0.5])
+# 2 vs 1
+t.test(ToothGrowth$len[ToothGrowth$dose == 2], ToothGrowth$len[ToothGrowth$dose == 1])
+# 1 vs dose .5
+t.test(ToothGrowth$len[ToothGrowth$dose == 1], ToothGrowth$len[ToothGrowth$dose == 0.5])
