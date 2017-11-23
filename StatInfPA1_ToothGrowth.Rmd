@@ -16,8 +16,7 @@ read_chunk('StatInf1_PA1_ToothGrowth_Script.R')
 Load & simple analysis here.
 
 ```{r load_external_code}
-<<chunk_1>>
-#head(data.frame(x,y))
+<<load>>
 ```
 
 ## Basic Summary of ToothGrowth Data
@@ -25,7 +24,7 @@ Load & simple analysis here.
 Short summary of the data
 
 ```{r summary}
-<<chunk_2>>
+<<summary_ex_anal>>
 ```
 
 ## Tooth Growth Comparison By Supp And Dose
@@ -33,7 +32,7 @@ Short summary of the data
 Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
 
 ```{r comparison}
-<<chunk_3>>
+<<comparison>>
 ```
 
 
